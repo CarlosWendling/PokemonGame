@@ -2,7 +2,7 @@
 
 ## Visão Geral
 
-O arquivo `main.cpp` é o ponto de entrada da aplicação.
+O arquivo `main.cpp` é o ponto de entrada da aplicação. Além de atuar como ponto de entrada, a versão atual também implementa a interface textual de interação com o usuário através de um menu baseado em terminal.
 
 Sua responsabilidade é:
 
@@ -12,30 +12,38 @@ Sua responsabilidade é:
 4. executar as análises;
 5. consolidar os resultados.
 
----
-
 # Fluxo Geral
+
+Após a inicialização dos times e do analisador, o programa entra em um menu interativo.
 
 ```text
 Inicialização
       │
       ▼
-Criação dos Times
+Menu Principal
+      │
+      ├── Análise Global
+      │       │
+      │       ▼
+      │   Geração dos 36 Grafos
+      │       │
+      │       ▼
+      │   Relatório Consolidado
+      │
+      ├── Combate Específico
+      │       │
+      │       ▼
+      │   Seleção dos Pokémon
+      │       │
+      │       ▼
+      │   Construção do Grafo
+      │       │
+      │       ▼
+      │   Simulação de Combate
       │
       ▼
-Combate Pokémon x Pokémon
-      │
-      ▼
-Construção do Grafo
-      │
-      ▼
-Análise do Grafo
-      │
-      ▼
-Relatório Final
+Encerramento
 ```
-
----
 
 # Criação dos Times
 
@@ -52,8 +60,6 @@ Cada Pokémon possui:
 - atributos base;
 - conjunto de movimentos.
 
----
-
 # Geração dos Confrontos
 
 O programa executa:
@@ -69,8 +75,6 @@ for (auto* p1 : team1)
 ```
 
 Essa estratégia produz todas as combinações possíveis entre os dois times.
-
----
 
 ## Complexidade
 
@@ -89,8 +93,6 @@ O(n × m)
 
 combates serão analisados.
 
----
-
 # Construção do Grafo
 
 Para cada confronto:
@@ -107,13 +109,9 @@ O construtor:
 2. gera todos os estados alcançáveis;
 3. armazena as transições.
 
----
-
 # Execução das Análises
 
 A classe `MetaAnalyzer` é utilizada para responder perguntas sobre o combate.
-
----
 
 ## Taxa de Vitória
 
@@ -123,8 +121,6 @@ CalculateWinRateP1()
 
 Calcula a proporção de estados terminais vencidos pelo Pokémon 1.
 
----
-
 ## Vencedor Absoluto
 
 ```cpp
@@ -132,8 +128,6 @@ CheckAbsoluteWinner()
 ```
 
 Verifica se apenas um dos combatentes pode vencer.
-
----
 
 ## Ciclos
 
@@ -143,8 +137,6 @@ DetectEndlessBattles()
 
 Detecta batalhas potencialmente infinitas.
 
----
-
 ## Simulação Demonstrativa
 
 ```cpp
@@ -153,7 +145,43 @@ PrintSampleBattle()
 
 Exibe uma trajetória específica de estados para fins ilustrativos.
 
----
+# Menu Interativo
+
+A versão atual do programa disponibiliza duas formas de utilização.
+
+## Opção 1 — Análise Global do Metagame
+
+Executa todos os confrontos possíveis entre os dois times.
+
+Quantidade total de combates:
+
+```text
+6 × 6 = 36 confrontos
+```
+
+Para cada confronto:
+
+1. Um grafo é construído.
+2. As métricas são calculadas.
+3. Os resultados são agregados.
+
+Ao final, o relatório consolidado responde às cinco perguntas do trabalho.
+
+## Opção 2 — Simulação de Combate Específico
+
+Permite que o usuário escolha manualmente um Pokémon de cada equipe.
+
+Após a seleção:
+
+1. Um único `CombatGraph` é construído.
+2. O método `PrintSampleBattle()` é executado.
+3. Uma trajetória de exemplo é exibida.
+
+Essa funcionalidade possui caráter demonstrativo e facilita a visualização da evolução dos estados da batalha.
+
+## Opção 3 — Encerramento
+
+Finaliza a execução do programa e libera a memória alocada para os Pokémon.
 
 # Consolidação dos Resultados
 
@@ -163,8 +191,6 @@ Após todos os confrontos:
 - pontuações individuais são calculadas;
 - métricas globais são produzidas.
 
----
-
 # Perguntas Respondidas pelo Programa
 
 Ao final da execução, o sistema responde:
@@ -173,31 +199,21 @@ Ao final da execução, o sistema responde:
 
 Comparação do desempenho agregado dos dois times.
 
----
-
 ## 2. Qual Pokémon teve melhor desempenho individual?
 
 Análise do score acumulado de vitórias.
-
----
 
 ## 3. Existem vitórias absolutas?
 
 Busca por dominância total de um combatente.
 
----
-
 ## 4. Existem batalhas intermináveis?
 
 Detecção de ciclos no espaço de estados.
 
----
-
 ## 5. A vantagem de tipo é sempre determinante?
 
 Verificação de casos onde atributos ou velocidade compensam desvantagens elementais.
-
----
 
 # Papel do main.cpp
 
