@@ -15,8 +15,6 @@ Após a construção do grafo, algoritmos de análise são executados para respo
 
 O domínio Pokémon foi utilizado como contexto para o estudo de modelagem de estados, exploração de grafos e análise algorítmica.
 
----
-
 ## Arquitetura
 
 ```text
@@ -44,8 +42,6 @@ TypeChart
 | CombatGraph  | Construção do espaço de estados              |
 | MetaAnalyzer | Execução das análises sobre o grafo          |
 
----
-
 ## Conceitos Fundamentais
 
 ### Estado
@@ -62,8 +58,6 @@ Significa:
 
 - Charizard com 70% de HP
 - Blastoise com 40% de HP
-
----
 
 ### Grafo de Combate
 
@@ -83,8 +77,6 @@ Estado B
 Estado C
 ```
 
----
-
 ### Controle da Explosão Combinatória
 
 Para limitar o crescimento do espaço de estados, o projeto utiliza uma discretização do HP.
@@ -96,8 +88,6 @@ Características:
 - Cura fixa de 50%.
 
 Essa simplificação reduz significativamente a quantidade de estados distintos possíveis, tornando viável a construção completa do grafo.
-
----
 
 ## Documentos
 

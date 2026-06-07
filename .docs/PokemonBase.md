@@ -14,8 +14,6 @@ Ele define:
 
 Todos os demais componentes do projeto dependem direta ou indiretamente dessas definições.
 
----
-
 # Sistema de Tipos
 
 ## Enum Type
@@ -34,8 +32,6 @@ Exemplos:
 - DRAGON
 - GHOST
 
----
-
 ## TypeChart
 
 ```cpp
@@ -51,8 +47,6 @@ FIRE → GRASS = 2.0
 FIRE → WATER = 0.5
 NORMAL → GHOST = 0.0
 ```
-
----
 
 ## GetEffectiveness
 
@@ -70,15 +64,11 @@ O(1)
 
 A operação consiste em um acesso direto à matriz.
 
----
-
 # Classe Move
 
 ## Responsabilidade
 
 Representar um golpe disponível para um Pokémon.
-
----
 
 ## Estrutura
 
@@ -92,8 +82,6 @@ Exemplo:
 Flamethrower
 ```
 
----
-
 ### type
 
 Tipo elemental do golpe.
@@ -103,8 +91,6 @@ Exemplo:
 ```text
 FIRE
 ```
-
----
 
 ### category
 
@@ -118,13 +104,9 @@ SPECIAL
 STATUS
 ```
 
----
-
 ### power
 
 Poder base utilizado no cálculo de dano.
-
----
 
 ## Observação
 
@@ -138,23 +120,17 @@ static Move Flamethrower(...)
 
 Essas instâncias funcionam como um banco de movimentos simplificado para a aplicação.
 
----
-
 # Classe Pokemon
 
 ## Responsabilidade
 
 Representar um Pokémon participante da batalha.
 
----
-
 ## Atributos
 
 ### name
 
 Nome do Pokémon.
-
----
 
 ### types
 
@@ -171,51 +147,35 @@ Exemplo:
 [FIRE, FLYING]
 ```
 
----
-
 ### hp
 
 HP base utilizado para normalização dos danos.
-
----
 
 ### attack
 
 Ataque físico.
 
----
-
 ### defense
 
 Defesa física.
-
----
 
 ### spAttack
 
 Ataque especial.
 
----
-
 ### spDefense
 
 Defesa especial.
 
----
-
 ### speed
 
 Velocidade utilizada para determinar a ordem das ações.
-
----
 
 ### moves
 
 Conjunto de movimentos disponíveis.
 
 O projeto considera até quatro ações por Pokémon.
-
----
 
 # Algoritmo de Cálculo de Dano
 
@@ -226,8 +186,6 @@ int CalculateDamage(...)
 ```
 
 Calcula o dano percentual causado por um golpe.
-
----
 
 ## Etapas
 
@@ -247,8 +205,6 @@ SpAttack
 SpDefense
 ```
 
----
-
 ### 2. Cálculo de efetividade
 
 Para cada tipo do defensor:
@@ -266,8 +222,6 @@ FIRE → STEEL = 2.0
 Resultado = 4.0
 ```
 
----
-
 ### 3. Aplicação do STAB
 
 STAB (Same Type Attack Bonus).
@@ -280,13 +234,9 @@ Se o tipo do golpe pertence ao atacante:
 
 é aplicado ao dano.
 
----
-
 ### 4. Conversão para porcentagem
 
 O dano bruto é convertido para porcentagem do HP base do alvo.
-
----
 
 ### 5. Discretização
 
@@ -299,15 +249,11 @@ Exemplo:
 41% → 50%
 ```
 
----
-
 ## Objetivo da Discretização
 
 A discretização reduz significativamente o número de estados possíveis da batalha.
 
 Sem ela, o espaço de estados cresceria rapidamente, tornando a construção completa do grafo inviável para fins acadêmicos.
-
----
 
 ## Complexidade
 
@@ -329,8 +275,6 @@ O(1)
 
 na prática.
 
----
-
 # Classe State
 
 ## Responsabilidade
@@ -339,21 +283,15 @@ Representar um estado específico da batalha.
 
 Cada vértice do grafo contém exatamente um objeto desta classe.
 
----
-
 ## Atributos
 
 ### p1
 
 Referência para o Pokémon 1.
 
----
-
 ### p2
 
 Referência para o Pokémon 2.
-
----
 
 ### hp1
 
@@ -361,15 +299,11 @@ HP atual do Pokémon 1.
 
 Representado em porcentagem.
 
----
-
 ### hp2
 
 HP atual do Pokémon 2.
 
 Representado em porcentagem.
-
----
 
 # Identity
 
@@ -387,15 +321,11 @@ Charizard_70_Blastoise_40
 
 Esse identificador é utilizado como chave da tabela hash do grafo.
 
----
-
 ## Complexidade
 
 ```text
 O(1)
 ```
-
----
 
 # ApplyMove
 
@@ -411,15 +341,11 @@ O método:
 2. reduz o HP do alvo;
 3. impede valores negativos.
 
----
-
 ## Complexidade
 
 ```text
 O(1)
 ```
-
----
 
 # ApplyRecover
 
@@ -434,15 +360,11 @@ Características:
 - restaura 50% de HP;
 - respeita o limite máximo de 100%.
 
----
-
 ## Complexidade
 
 ```text
 O(1)
 ```
-
----
 
 # Step
 
@@ -454,15 +376,11 @@ Método mais importante da classe.
 
 Recebe uma combinação de ações e produz o próximo estado da batalha.
 
----
-
 ## Fluxo
 
 ### 1. Seleção dos golpes
 
 Os índices recebidos identificam os movimentos escolhidos.
-
----
 
 ### 2. Determinação da ordem
 
@@ -472,8 +390,6 @@ A velocidade dos Pokémon é comparada.
 Maior Speed → age primeiro
 ```
 
----
-
 ### 3. Execução da ação do primeiro Pokémon
 
 Pode ser:
@@ -481,13 +397,9 @@ Pode ser:
 - ataque;
 - Recover.
 
----
-
 ### 4. Execução da ação do segundo Pokémon
 
 Executada somente se o Pokémon ainda estiver vivo.
-
----
 
 ### 5. Retorno do novo estado
 
@@ -495,15 +407,11 @@ O estado original não é alterado.
 
 Um novo objeto é retornado.
 
----
-
 ## Complexidade
 
 ```text
 O(1)
 ```
-
----
 
 # Papel no Projeto
 

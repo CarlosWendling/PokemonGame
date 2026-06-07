@@ -11,8 +11,6 @@ O resultado é um grafo direcionado onde:
 - vértices representam estados;
 - arestas representam transições causadas por ações dos jogadores.
 
----
-
 ## Estrutura Transition
 
 Representa uma aresta do grafo.
@@ -25,8 +23,6 @@ Representa uma aresta do grafo.
 | moveIdx2    | Movimento utilizado pelo Pokémon 2 |
 | nextStateId | Identificador do estado destino    |
 
----
-
 ## Estrutura GraphNode
 
 Representa um vértice do grafo.
@@ -38,15 +34,11 @@ Representa um vértice do grafo.
 | state       | Estado da batalha    |
 | transitions | Transições possíveis |
 
----
-
 ## Classe CombatGraph
 
 ### Responsabilidade
 
 Construir e armazenar todos os estados alcançáveis de um confronto.
-
----
 
 ### graphMap
 
@@ -68,15 +60,11 @@ Busca média:
 O(1)
 ```
 
----
-
 ### rootId
 
 Identificador do estado inicial da batalha.
 
 Serve como ponto de entrada para algoritmos de busca.
-
----
 
 ## Algoritmo de Construção
 
@@ -92,8 +80,6 @@ Fluxo:
 4. Produzir estados sucessores.
 5. Inserir novos estados na fila.
 6. Registrar transições.
-
----
 
 ## Complexidade
 
@@ -117,8 +103,6 @@ O(V + E)
 ```text
 O(V + E)
 ```
-
----
 
 ## Decisão de Projeto
 

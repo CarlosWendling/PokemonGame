@@ -6,8 +6,6 @@ A classe `MetaAnalyzer` executa análises sobre o grafo de combate.
 
 Seu objetivo é extrair informações estratégicas e estatísticas dos estados gerados.
 
----
-
 ## DetectEndlessBattles
 
 ### Objetivo
@@ -32,8 +30,6 @@ Se um estado for encontrado novamente durante a mesma pilha de recursão, um cic
 ```text
 O(V + E)
 ```
-
----
 
 ## CheckAbsoluteWinner
 
@@ -69,8 +65,6 @@ Breadth-First Search (BFS).
 O(V + E)
 ```
 
----
-
 ## CalculateWinRateP1
 
 ### Objetivo
@@ -90,8 +84,6 @@ total de estados terminais
 ```text
 O(V)
 ```
-
----
 
 ## PrintSampleBattle
 
