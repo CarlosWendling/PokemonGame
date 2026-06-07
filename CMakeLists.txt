@@ -1,0 +1,12 @@
+cmake_minimum_required(VERSION 4.2)
+project(PokemonGame)
+
+set(CMAKE_CXX_STANDARD 14)
+
+include_directories(.)
+
+add_executable(PokemonGame
+        CombatGraph.h
+        main.cpp
+        MetaAnalizer.h
+        PokemonBase.h)
