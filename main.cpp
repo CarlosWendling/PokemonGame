@@ -109,19 +109,34 @@ int main() {
         std::cout << "2. Escolher um Combate Especifico por Etapas\n";
         std::cout << "3. Sair do Simulador\n";
         std::cout << "Escolha uma opcao: ";
-        std::cin >> opcao;
+        
+        if (!(std::cin >> opcao)) {
+        std::cin.clear();
+        std::cin.ignore(10000, '\n');
 
-        if (opcao == 1) {
-            ExibirRelatorioGeral(team1, team2, analyzer);
-        }
-        else if (opcao == 2) {
-            std::cout << "\n--- SELECIONE O POKEMON DO TIME 1 ---\n";
+        std::cout << "Entrada invalida! Digite apenas numeros.\n";
+        continue;
+    }
+
+        switch(opcao) {
+            case 1:
+                ExibirRelatorioGeral(team1, team2, analyzer);
+                break;
+
+            case 2:
+                std::cout << "\n--- SELECIONE O POKEMON DO TIME 1 ---\n";
             for (size_t i = 0; i < team1.size(); ++i) {
                 std::cout << i + 1 << ". " << team1[i]->name << "\n";
             }
             int escolha1;
             std::cout << "Escolha (1-6): ";
-            std::cin >> escolha1;
+            if (!(std::cin >> escolha1)) {
+                std::cin.clear();
+                std::cin.ignore(10000, '\n');
+
+                std::cout << "Entrada invalida! Digite apenas numeros.\n";
+                continue;
+            }
 
             std::cout << "\n--- SELECIONE O POKEMON DO TIME 2 ---\n";
             for (size_t i = 0; i < team2.size(); ++i) {
@@ -129,7 +144,13 @@ int main() {
             }
             int escolha2;
             std::cout << "Escolha (1-6): ";
-            std::cin >> escolha2;
+            if (!(std::cin >> escolha2)) {
+                std::cin.clear();
+                std::cin.ignore(10000, '\n');
+
+                std::cout << "Entrada invalida! Digite apenas numeros.\n";
+                continue;
+            }
 
             if (escolha1 >= 1 && escolha1 <= 6 && escolha2 >= 1 && escolha2 <= 6) {
                 Pokemon* p1 = team1[escolha1 - 1];
@@ -140,11 +161,13 @@ int main() {
             } else {
                 std::cout << "Escolha invalida!\n";
             }
-        }
-        else if (opcao == 3) {
-            break;
-        } else {
-            std::cout << "Opcao Invalida!\n";
+                break;
+
+            case 3:
+                return 0;
+            
+            default:
+                std::cout << "Opcao Invalida!\n";
         }
     }
 
