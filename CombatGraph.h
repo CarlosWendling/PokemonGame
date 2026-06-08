@@ -59,7 +59,7 @@ private:
                     State nextState = current.Step(i, j);
                     std::string nextId = nextState.Identity();
 
-                    // Reutiliza estados idênticos através da Hash 
+
                     if (graphMap.find(nextId) == graphMap.end()) {
                         GraphNode* newNode = new GraphNode{nextState, {}};
                         graphMap[nextId] = newNode;

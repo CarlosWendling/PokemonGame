@@ -137,6 +137,7 @@ int main() {
 
                 CombatGraph cg(p1, p2);
                 analyzer.PrintSampleBattle(cg);
+
             } else {
                 std::cout << "Escolha invalida!\n";
             }

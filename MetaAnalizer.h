@@ -1,6 +1,7 @@
 #pragma once
 #include "CombatGraph.h"
 #include <set>
+#include <fstream>
 #include <iostream>
 
 class MetaAnalyzer {
@@ -97,14 +98,20 @@ public:
         std::string currentId = cg.rootId;
         int turn = 1;
 
+        std::ofstream logFile("dados.js");
+
         std::cout << "\n--------------------------------------------------\n";
-        std::cout << "⚔️ SIMULACAO DE COMBATE ATIVA: " << cg.graphMap[currentId]->state.p1->name 
+        std::cout << "BATTLE SIMULATION: " << cg.graphMap[currentId]->state.p1->name
                   << " x " << cg.graphMap[currentId]->state.p2->name << "\n";
         std::cout << "--------------------------------------------------\n";
 
+        if (logFile.is_open()) {
+            logFile << "const dadosBatalha = [\n";
+        }
+
         while (true) {
             GraphNode* node = cg.graphMap[currentId];
-            
+
             std::cout << "Turno " << turn << ":\n";
             std::cout << "  -> " << node->state.p1->name << " HP: " << node->state.hp1 << "%\n";
             std::cout << "  -> " << node->state.p2->name << " HP: " << node->state.hp2 << "%\n";
@@ -114,12 +121,16 @@ public:
                 if (node->state.hp1 > 0) std::cout << node->state.p1->name << " E O VENCEDOR!\n";
                 else if (node->state.hp2 > 0) std::cout << node->state.p2->name << " E O VENCEDOR!\n";
                 else std::cout << "COMBATE EMPATADO!\n";
+
+                if (logFile.is_open()) {
+                    logFile << "  [\"" << node->state.p1->name << "\", " << node->state.hp1 << ", \""
+                            << node->state.p2->name << "\", " << node->state.hp2 << ", \"FIM\", \"FIM\"]\n";
+                }
                 break;
             }
 
             if (node->transitions.empty()) break;
 
-            // Escolha padrão simulada: Ambas as IAs executam suas primeiras habilidades indexadas (0,0)
             const Transition* chosenTransition = nullptr;
             for (const auto& t : node->transitions) {
                 if (t.moveIdx1 == 0 && t.moveIdx2 == 0) {
@@ -130,17 +141,36 @@ public:
 
             if (!chosenTransition) chosenTransition = &node->transitions[0];
 
-            std::cout << "  💥 " << node->state.p1->name << " desferiu: " << node->state.p1->moves[chosenTransition->moveIdx1].name << "\n";
-            std::cout << "  💥 " << node->state.p2->name << " desferiu: " << node->state.p2->moves[chosenTransition->moveIdx2].name << "\n";
+            std::string nomeGolpeP1 = node->state.p1->moves[chosenTransition->moveIdx1].name;
+            std::string nomeGolpeP2 = node->state.p2->moves[chosenTransition->moveIdx2].name;
+
+            std::cout << node->state.p1->name << " desferiu: " << nomeGolpeP1 << "\n";
+            std::cout << node->state.p2->name << " desferiu: " << nomeGolpeP2 << "\n";
             std::cout << "--------------------------------------------------\n";
+
+            if (logFile.is_open()) {
+                logFile << "  [\"" << node->state.p1->name << "\", " << node->state.hp1 << ", \""
+                        << node->state.p2->name << "\", " << node->state.hp2 << ", \""
+                        << nomeGolpeP1 << "\", \"" << nomeGolpeP2 << "\"],\n";
+            }
 
             currentId = chosenTransition->nextStateId;
             turn++;
 
             if (turn > 15) {
                 std::cout << "🔄 [CICLO RECURSIVO] Travamento de loop por regeneracao consecutiva (Recover)!\n";
+                if (logFile.is_open()) {
+                    logFile << "  [\"" << node->state.p1->name << "\", " << node->state.hp1 << ", \""
+                            << node->state.p2->name << "\", " << node->state.hp2 << ", \"LOOP\", \"LOOP\"]\n";
+                }
                 break;
             }
         }
+
+        if (logFile.is_open()) {
+            logFile << "];\n";
+            logFile.close();
+        }
     }
+
 };
