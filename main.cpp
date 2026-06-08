@@ -5,7 +5,7 @@
 
 #include "PokemonBase.h"
 #include "CombatGraph.h"
-#include "MetaAnalizer.h"
+#include "MetaAnalyzer.h"
 
 void ExibirRelatorioGeral(const std::vector<Pokemon*>& team1, const std::vector<Pokemon*>& team2, MetaAnalyzer& analyzer) {
     std::map<std::string, float> pokemonGlobalWinScore;
